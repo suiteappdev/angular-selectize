@@ -39,7 +39,6 @@ angular.module('selectize', []).value('selectizeConfig', {}).directive("selectiz
 
         selectize.addOption(curr, true);
 
-        selectize.refreshOptions(false); // updates results if user has entered a query
         setSelectizeValue();
       }
 
@@ -82,7 +81,10 @@ angular.module('selectize', []).value('selectizeConfig', {}).directive("selectiz
         selectize = element[0].selectize;
 
         setSelectizeOptions(scope.options);
-
+        
+        if(scope.config.setFocus){
+          selectize.focus();
+        }
         //provides a way to access the selectize element from an
         //angular controller
         if (scope.config.onInitialize) {
@@ -94,7 +96,7 @@ angular.module('selectize', []).value('selectizeConfig', {}).directive("selectiz
         scope.$watch('ngDisabled', toggle);
       };
 
-      $(element).selectize(settings);
+      element.selectize(settings);
 
       element.on('$destroy', function() {
         if (selectize) {
@@ -105,3 +107,4 @@ angular.module('selectize', []).value('selectizeConfig', {}).directive("selectiz
     }
   };
 }]);
+
